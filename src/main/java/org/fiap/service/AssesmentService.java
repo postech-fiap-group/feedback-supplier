@@ -1,8 +1,8 @@
-package org.fiap.Services;
+package org.fiap.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.fiap.Models.Assessment;
-import org.fiap.Repositories.AssessmentRepository;
+import org.fiap.model.Assessment;
+import org.fiap.repository.AssessmentRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +16,7 @@ public class AssesmentService {
         this.assessmentRepository = assessmentRepository;
     }
 */
-    public List<Assessment> listarTodas() {
+    public List<org.fiap.model.Assessment> listarTodas() {
 //       return assessmentRepository.listAll();
         return Arrays.asList(new Assessment("Tema abordado",10),new Assessment("Material usado na aula", 9));
  }

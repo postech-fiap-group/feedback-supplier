@@ -6,8 +6,8 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import org.fiap.Models.Assessment;
-import org.fiap.Services.AssesmentService;
+import org.fiap.model.Assessment;
+import org.fiap.service.AssesmentService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.fiap.Models;
+package org.fiap.model;
 
 public class Assessment {
 

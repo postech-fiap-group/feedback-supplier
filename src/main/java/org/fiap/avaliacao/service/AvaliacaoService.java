@@ -8,6 +8,8 @@ import org.fiap.avaliacao.entity.AvaliacaoEntity;
 import org.fiap.avaliacao.repository.AvaliacaoRepository;
 import org.fiap.notificacao.service.NotificacaoService;
 
+import java.util.List;
+
 @ApplicationScoped
 public class AvaliacaoService {
 
@@ -30,5 +32,9 @@ public class AvaliacaoService {
         }
 
         return avaliacao;
+    }
+
+    public List<AvaliacaoEntity> listar() {
+        return repository.listAll();
     }
 }

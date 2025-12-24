@@ -21,4 +21,10 @@ public class AvaliacaoResource {
                 .entity(service.criar(dto))
                 .build();
     }
+
+    @GET
+    public Response listar() {
+        return Response.ok(service.listar()).build();
+    }
+
 }

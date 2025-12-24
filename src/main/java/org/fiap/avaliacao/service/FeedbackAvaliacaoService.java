@@ -1,8 +1,8 @@
-package org.fiap.service;
+package org.fiap.avaliacao.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.fiap.dto.FeedbackAvaliacaoDTO;
+import org.fiap.avaliacao.dto.FeedbackAvaliacaoDTO;
 import org.fiap.messaging.FeedbackProducer;
 
 import java.util.ArrayList;

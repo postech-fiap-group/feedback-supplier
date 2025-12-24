@@ -1,11 +1,11 @@
-package org.fiap.service;
+package org.fiap.avaliacao.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import org.fiap.dto.UsuarioDTO;
-import org.fiap.model.UsuarioEntity;
-import org.fiap.repository.UsuarioRepository;
+import org.fiap.avaliacao.dto.UsuarioDTO;
+import org.fiap.avaliacao.entity.UsuarioEntity;
+import org.fiap.avaliacao.repository.UsuarioRepository;
 
 import java.util.List;
 

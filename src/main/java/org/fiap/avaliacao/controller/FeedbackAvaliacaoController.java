@@ -1,11 +1,11 @@
-package org.fiap.controller;
+package org.fiap.avaliacao.controller;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.fiap.dto.FeedbackAvaliacaoDTO;
-import org.fiap.service.FeedbackAvaliacaoService;
+import org.fiap.avaliacao.dto.FeedbackAvaliacaoDTO;
+import org.fiap.avaliacao.service.FeedbackAvaliacaoService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.fiap.dto;
+package org.fiap.avaliacao.dto;
 
 public record UsuarioDTO(
         String nome,

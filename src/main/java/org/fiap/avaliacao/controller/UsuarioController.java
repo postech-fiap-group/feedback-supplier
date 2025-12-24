@@ -1,11 +1,11 @@
-package org.fiap.controller;
+package org.fiap.avaliacao.controller;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.fiap.dto.UsuarioDTO;
-import org.fiap.model.UsuarioEntity;
-import org.fiap.service.UsuarioService;
+import org.fiap.avaliacao.dto.UsuarioDTO;
+import org.fiap.avaliacao.entity.UsuarioEntity;
+import org.fiap.avaliacao.service.UsuarioService;
 
 import java.util.List;
 

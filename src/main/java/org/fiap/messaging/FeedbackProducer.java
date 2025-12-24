@@ -3,7 +3,7 @@ package org.fiap.messaging;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
-import org.fiap.dto.FeedbackAvaliacaoDTO;
+import org.fiap.avaliacao.dto.FeedbackAvaliacaoDTO;
 
 @ApplicationScoped
 public class FeedbackProducer {

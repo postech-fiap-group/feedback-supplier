@@ -1,4 +1,4 @@
-package org.fiap.model;
+package org.fiap.avaliacao.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;

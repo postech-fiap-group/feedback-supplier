@@ -1,0 +1,9 @@
+package org.fiap.repository;
+
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import org.fiap.model.UsuarioEntity;
+
+@ApplicationScoped
+public class UsuarioRepository implements PanacheRepository<UsuarioEntity> {
+}

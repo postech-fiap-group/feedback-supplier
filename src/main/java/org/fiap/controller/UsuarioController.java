@@ -1,10 +1,10 @@
 package org.fiap.controller;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.fiap.dto.UsuarioDTO;
+import org.fiap.model.UsuarioEntity;
 import org.fiap.service.UsuarioService;
 
 import java.util.List;
@@ -12,7 +12,6 @@ import java.util.List;
 @Path("/usuarios")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
 public class UsuarioController {
 
     @Inject
@@ -24,7 +23,7 @@ public class UsuarioController {
     }
 
     @GET
-    public List<UsuarioDTO> listarTodos() {
+    public List<UsuarioEntity> listarTodos() {
         return service.listar();
     }
 }

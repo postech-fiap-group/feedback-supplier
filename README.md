@@ -1,62 +1,199 @@
-# feedback-supplier
+# 📘 Plataforma de Feedback Acadêmico
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+**Tech Challenge – Fase 4**
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+Projeto desenvolvido para o **Tech Challenge – Fase 4**, com foco em **Cloud Computing, Serverless e Deploy de Aplicações em Nuvem**.
 
-## Running the application in dev mode
+---
 
-You can run your application in dev mode that enables live coding using:
+## 📌 Descrição do Projeto
 
-```shell script
-./mvnw quarkus:dev
+Este projeto consiste no desenvolvimento de uma **plataforma de feedback acadêmico** que permite aos estudantes avaliarem aulas e aos administradores acompanharem a satisfação dos alunos por meio de **notificações automáticas** e **relatórios periódicos**.
+
+A aplicação foi construída utilizando **arquitetura desacoplada**, **mensageria** e **funções serverless**, garantindo **escalabilidade**, **resiliência** e **facilidade de manutenção**.
+
+---
+
+## 🎯 Objetivo
+
+O sistema tem como objetivos principais:
+
+* Receber feedbacks dos alunos
+* Identificar automaticamente feedbacks críticos
+* Enviar notificações automáticas para administradores
+* Gerar relatórios semanais de feedback
+* Executar em ambiente cloud
+* Utilizar arquitetura serverless
+* Possuir deploy automatizado
+* Disponibilizar monitoramento da aplicação
+
+---
+
+## 🏗️ Arquitetura da Solução
+
+A arquitetura segue o padrão de **microsserviços com mensageria**, utilizando **funções serverless** para processamento assíncrono.
+
+### Fluxo da aplicação:
+
+```
+Cliente
+  |
+  |--> API REST (Quarkus)
+         |
+         |--> Banco de Dados MySQL
+         |
+         |--> RabbitMQ (Exchange + Queue)
+                  |
+                  |--> Função Serverless de Notificação
+                  |
+                  |--> Logs e Monitoramento
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+Cada componente possui **responsabilidade única**, garantindo baixo acoplamento e melhor manutenibilidade.
 
-## Packaging and running the application
+---
 
-The application can be packaged using:
+## 🛠️ Tecnologias Utilizadas
 
-```shell script
-./mvnw package
+* Java 17
+* Quarkus
+* RabbitMQ
+* MicroProfile Reactive Messaging
+* MySQL
+* Docker
+* Arquitetura Serverless
+* Cloud Computing
+
+---
+
+## ☁️ Serverless
+
+O projeto implementa **duas funções serverless obrigatórias**, conforme solicitado no desafio:
+
+### Função 1 – Avaliação
+
+* Recebe feedbacks via endpoint REST
+* Persiste dados no banco de dados
+* Publica eventos no RabbitMQ
+
+### Função 2 – Notificação
+
+* Consome mensagens do RabbitMQ
+* Identifica feedbacks críticos
+* Processa e envia notificações automaticamente
+
+Ambas seguem rigorosamente o **princípio da Responsabilidade Única**.
+
+---
+
+## 🚨 Notificações Automáticas
+
+Quando uma avaliação é considerada **urgente**, o sistema gera automaticamente uma notificação contendo:
+
+* Descrição do feedback
+* Indicador de urgência
+* Data e hora do envio
+
+As notificações são enviadas de forma **assíncrona**, utilizando **RabbitMQ**.
+
+---
+
+## 📊 Relatório Semanal
+
+O sistema gera relatórios semanais contendo:
+
+* Quantidade de avaliações por dia
+* Quantidade de avaliações urgentes e não urgentes
+* Média geral das avaliações
+* Histórico de feedbacks
+
+Esses dados auxiliam os administradores na **análise da satisfação dos alunos** e na **tomada de decisão**.
+
+---
+
+## 🔐 Segurança e Governança
+
+* Uso de variáveis de ambiente para credenciais
+* Isolamento de produtores e consumidores
+* Controle de acesso à mensageria
+* Configuração de filas e exchanges no RabbitMQ
+
+---
+
+## 📈 Monitoramento
+
+A aplicação é monitorada por meio de:
+
+* Logs estruturados do Quarkus
+* Console administrativo do RabbitMQ
+* Monitoramento de filas, exchanges e mensagens processadas
+
+---
+
+## 🐇 Configuração do RabbitMQ
+
+**Exchange**
+
+* Nome: `feedback-exchange`
+* Tipo: `topic`
+
+**Queue**
+
+* Nome: `feedback-queue`
+
+**Routing Key**
+
+* `feedback.avaliacao`
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+src/main/java
+org/fiap
+├── avaliacao
+│   ├── controller
+│   ├── dto
+|   ├── entity
+│   ├── repository
+│   └── dto
+├── notificacao
+│   ├── consumer
+│   ├── dto
+│   └── service
+└── relatorio
+    ├── controller
+    ├── dto
+    └── service
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+---
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+## 🚀 Deploy
 
-If you want to build an _über-jar_, execute the following command:
+O deploy é realizado via **Docker**, garantindo:
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+* Ambiente padronizado
+* Facilidade de execução em nuvem
+* Escalabilidade
+* Inicialização automática dos serviços
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+---
 
-## Creating a native executable
+## 🎥 Vídeo de Demonstração
 
-You can create a native executable using:
+O vídeo de entrega apresenta:
 
-```shell script
-./mvnw package -Dnative
-```
+* A aplicação em execução
+* Envio de avaliações
+* Processamento de mensagens no RabbitMQ
+* Execução das funções serverless
+* Configurações do ambiente em cloud
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+---
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
+## ✅ Conclusão
 
-You can then execute your native executable with: `./target/feedback-supplier-1.0.0-SNAPSHOT-runner`
+O projeto atende **integralmente aos requisitos do Tech Challenge – Fase 4**, utilizando **Cloud Computing**, **Serverless**, **Mensageria**, **Monitoramento** e **Boas Práticas de Arquitetura**, entregando uma solução **robusta**, **escalável** e **preparada para ambiente de produção**.
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)

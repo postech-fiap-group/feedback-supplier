@@ -2,15 +2,15 @@
 
 **Tech Challenge – Fase 4**
 
-Projeto desenvolvido para o **Tech Challenge – Fase 4**, com foco em **Cloud Computing, Serverless e Deploy de Aplicações em Nuvem**.
+Projeto desenvolvido para o **Tech Challenge – Fase 4**, com foco em **Cloud Computing, Serverless, Segurança JWT e Deploy de Aplicações em Nuvem**.
 
 ---
 
 ## 📌 Descrição do Projeto
 
-Este projeto consiste no desenvolvimento de uma **plataforma de feedback acadêmico** que permite aos estudantes avaliarem aulas e aos administradores acompanharem a satisfação dos alunos por meio de **notificações automáticas** e **relatórios periódicos**.
+Este projeto consiste no desenvolvimento de uma **plataforma de feedback acadêmico** que permite aos estudantes avaliarem aulas e aos administradores acompanharem a satisfação dos alunos por meio de **notificações automáticas**, **relatórios periódicos** e **controle de acesso por autenticação JWT**.
 
-A aplicação foi construída utilizando **arquitetura desacoplada**, **mensageria** e **funções serverless**, garantindo **escalabilidade**, **resiliência** e **facilidade de manutenção**.
+A aplicação foi construída utilizando **arquitetura desacoplada**, **mensageria**, **segurança baseada em tokens** e **funções serverless**, garantindo **escalabilidade**, **resiliência** e **facilidade de manutenção**.
 
 ---
 
@@ -24,6 +24,7 @@ O sistema tem como objetivos principais:
 * Gerar relatórios semanais de feedback
 * Executar em ambiente cloud
 * Utilizar arquitetura serverless
+* Implementar autenticação e autorização via JWT
 * Possuir deploy automatizado
 * Disponibilizar monitoramento da aplicação
 
@@ -31,14 +32,14 @@ O sistema tem como objetivos principais:
 
 ## 🏗️ Arquitetura da Solução
 
-A arquitetura segue o padrão de **microsserviços com mensageria**, utilizando **funções serverless** para processamento assíncrono.
+A arquitetura segue o padrão de **microsserviços com mensageria**, utilizando **funções serverless** para processamento assíncrono e **JWT para segurança**.
 
 ### Fluxo da aplicação:
 
 ```
 Cliente
   |
-  |--> API REST (Quarkus)
+  |--> API REST (Quarkus + JWT)
          |
          |--> Banco de Dados MySQL
          |
@@ -57,12 +58,90 @@ Cada componente possui **responsabilidade única**, garantindo baixo acoplamento
 
 * Java 17
 * Quarkus
+* SmallRye JWT (MicroProfile JWT)
 * RabbitMQ
 * MicroProfile Reactive Messaging
 * MySQL
 * Docker
 * Arquitetura Serverless
 * Cloud Computing
+
+---
+
+## 🔐 Segurança com JWT
+
+A aplicação utiliza **JWT (JSON Web Token)** para autenticação e autorização.
+
+### Perfis de Usuário
+
+* **ADMIN** – acesso a relatórios e funcionalidades administrativas
+* **STUDENT** – envio de avaliações
+
+### Usuários Criados Automaticamente (Startup)
+
+No início da aplicação, os seguintes usuários são criados automaticamente caso não existam:
+
+| Email                                   | Senha | Role    |
+| --------------------------------------- | ----- | ------- |
+| [admin@fiap.com](mailto:admin@fiap.com) | 123   | ADMIN   |
+| [aluno@fiap.com](mailto:aluno@fiap.com) | 123   | STUDENT |
+
+---
+
+## 🔑 Autenticação
+
+### Endpoint de Login
+
+```
+POST /auth/login
+```
+
+**Body (JSON):**
+
+```json
+{
+  "email": "admin@fiap.com",
+  "senha": "123"
+}
+```
+
+✔ Retorna um **JWT** válido.
+
+---
+
+## 🧪 Testes com Postman
+
+### Uso do Token JWT
+
+Para acessar endpoints protegidos, é obrigatório informar o token no **Header**:
+
+```
+Authorization: Bearer <SEU_TOKEN_AQUI>
+```
+
+⚠️ Atenção:
+
+* Deve existir **um espaço** entre `Bearer` e o token
+* Não utilizar query string para enviar o token
+
+---
+
+## 🔒 Endpoints Protegidos
+
+### Relatório Semanal (ADMIN)
+
+```
+GET /relatorio/semanal
+```
+
+* Requer token JWT
+* Requer role **ADMIN**
+
+Anotação utilizada:
+
+```java
+@RolesAllowed("ADMIN")
+```
 
 ---
 
@@ -111,25 +190,6 @@ Esses dados auxiliam os administradores na **análise da satisfação dos alunos
 
 ---
 
-## 🔐 Segurança e Governança
-
-* Uso de variáveis de ambiente para credenciais
-* Isolamento de produtores e consumidores
-* Controle de acesso à mensageria
-* Configuração de filas e exchanges no RabbitMQ
-
----
-
-## 📈 Monitoramento
-
-A aplicação é monitorada por meio de:
-
-* Logs estruturados do Quarkus
-* Console administrativo do RabbitMQ
-* Monitoramento de filas, exchanges e mensagens processadas
-
----
-
 ## 🐇 Configuração do RabbitMQ
 
 **Exchange**
@@ -155,8 +215,10 @@ org/fiap
 ├── avaliacao
 │   ├── controller
 │   ├── dto
-|   ├── entity
-│   ├── repository
+│   ├── entity
+│   └── repository
+├── seguranca
+│   ├── service
 │   └── dto
 ├── notificacao
 │   ├── consumer
@@ -181,19 +243,16 @@ O deploy é realizado via **Docker**, garantindo:
 
 ---
 
-## 🎥 Vídeo de Demonstração
+## 📈 Monitoramento
 
-O vídeo de entrega apresenta:
+A aplicação é monitorada por meio de:
 
-* A aplicação em execução
-* Envio de avaliações
-* Processamento de mensagens no RabbitMQ
-* Execução das funções serverless
-* Configurações do ambiente em cloud
+* Logs estruturados do Quarkus
+* Console administrativo do RabbitMQ
+* Monitoramento de filas, exchanges e mensagens processadas
 
 ---
 
 ## ✅ Conclusão
 
-O projeto atende **integralmente aos requisitos do Tech Challenge – Fase 4**, utilizando **Cloud Computing**, **Serverless**, **Mensageria**, **Monitoramento** e **Boas Práticas de Arquitetura**, entregando uma solução **robusta**, **escalável** e **preparada para ambiente de produção**.
-
+O projeto atende **integralmente aos requisitos do Tech Challenge – Fase 4**, incorporando **Cloud Computing**, **Serverless**, **Mensageria**, **Segurança JWT**, **Monitoramento** e **Boas Práticas de Arquitetura**, entregando uma solução **robusta**, **segura**, **escalável** e **preparada para ambiente de produção**.

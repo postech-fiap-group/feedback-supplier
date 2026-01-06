@@ -1,5 +1,6 @@
 package org.fiap.avaliacao.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -10,6 +11,7 @@ import org.fiap.avaliacao.service.AvaliacaoService;
 @Path("/avaliacao")
 @Consumes("application/json")
 @Produces("application/json")
+@RolesAllowed("STUDENT")
 public class AvaliacaoResource {
 
     @Inject
@@ -23,8 +25,8 @@ public class AvaliacaoResource {
     }
 
     @GET
+    @RolesAllowed("ADMIN")
     public Response listar() {
         return Response.ok(service.listar()).build();
     }
-
 }

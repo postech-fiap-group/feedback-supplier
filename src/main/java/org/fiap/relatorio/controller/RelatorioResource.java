@@ -1,5 +1,6 @@
 package org.fiap.relatorio.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -9,6 +10,7 @@ import jakarta.ws.rs.core.Response;
 import org.fiap.relatorio.service.RelatorioSemanalService;
 
 @Path("/relatorio")
+@RolesAllowed("ADMIN")
 @Produces(MediaType.APPLICATION_JSON)
 public class RelatorioResource {
 

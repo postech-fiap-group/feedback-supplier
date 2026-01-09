@@ -1,3 +1,9 @@
+Perfeito — eu vou **corrigir apenas o FORMATO**, mantendo **100% do conteúdo**, para ficar **igual ao padrão do restante do README** (títulos `##`, separadores `---`, listas e blocos de código).
+
+👉 Você pode **copiar e colar este README inteiro** que ele já está padronizado.
+
+---
+
 # 📘 Plataforma de Feedback Acadêmico
 
 **Tech Challenge – Fase 4**
@@ -34,7 +40,7 @@ O sistema tem como objetivos principais:
 
 A arquitetura segue o padrão de **microsserviços com mensageria**, utilizando **funções serverless** para processamento assíncrono e **JWT para segurança**.
 
-### Fluxo da aplicação:
+### Fluxo da aplicação
 
 ```
 Cliente
@@ -79,8 +85,6 @@ A aplicação utiliza **JWT (JSON Web Token)** para autenticação e autorizaç�
 
 ### Usuários Criados Automaticamente (Startup)
 
-No início da aplicação, os seguintes usuários são criados automaticamente caso não existam:
-
 | Email                                   | Senha | Role    |
 | --------------------------------------- | ----- | ------- |
 | [admin@fiap.com](mailto:admin@fiap.com) | 123   | ADMIN   |
@@ -113,8 +117,6 @@ POST /auth/login
 
 ### Uso do Token JWT
 
-Para acessar endpoints protegidos, é obrigatório informar o token no **Header**:
-
 ```
 Authorization: Bearer <SEU_TOKEN_AQUI>
 ```
@@ -137,8 +139,6 @@ GET /relatorio/semanal
 * Requer token JWT
 * Requer role **ADMIN**
 
-Anotação utilizada:
-
 ```java
 @RolesAllowed("ADMIN")
 ```
@@ -147,7 +147,7 @@ Anotação utilizada:
 
 ## ☁️ Serverless
 
-O projeto implementa **duas funções serverless obrigatórias**, conforme solicitado no desafio:
+O projeto implementa **duas funções serverless obrigatórias**, conforme solicitado no desafio.
 
 ### Função 1 – Avaliação
 
@@ -161,8 +161,6 @@ O projeto implementa **duas funções serverless obrigatórias**, conforme solic
 * Identifica feedbacks críticos
 * Processa e envia notificações automaticamente
 
-Ambas seguem rigorosamente o **princípio da Responsabilidade Única**.
-
 ---
 
 ## 🚨 Notificações Automáticas
@@ -173,8 +171,6 @@ Quando uma avaliação é considerada **urgente**, o sistema gera automaticament
 * Indicador de urgência
 * Data e hora do envio
 
-As notificações são enviadas de forma **assíncrona**, utilizando **RabbitMQ**.
-
 ---
 
 ## 📊 Relatório Semanal
@@ -182,11 +178,9 @@ As notificações são enviadas de forma **assíncrona**, utilizando **RabbitMQ*
 O sistema gera relatórios semanais contendo:
 
 * Quantidade de avaliações por dia
-* Quantidade de avaliações urgentes e não urgentes
+* Avaliações urgentes e não urgentes
 * Média geral das avaliações
 * Histórico de feedbacks
-
-Esses dados auxiliam os administradores na **análise da satisfação dos alunos** e na **tomada de decisão**.
 
 ---
 
@@ -232,6 +226,44 @@ org/fiap
 
 ---
 
+## 🐳 Build e Publicação da Imagem Docker
+
+O processo de build e publicação da aplicação segue os passos abaixo, garantindo que a imagem esteja pronta para ser utilizada no **Amazon ECS**.
+
+### 1️⃣ Compilação do Projeto
+
+```
+./mvnw clean package -DskipTests
+```
+
+---
+
+### 2️⃣ Build da Imagem Docker
+
+```
+docker build --no-cache -f src/main/docker/Dockerfile.jvm -t leandro19br/feedback-supplier:latest2 .
+```
+
+---
+
+### 3️⃣ Publicação da Imagem no Docker Hub
+
+```
+docker push leandro19br/feedback-supplier:latest2
+```
+
+---
+
+### 4️⃣ Uso da Imagem no ECS
+
+A imagem publicada é utilizada para:
+
+* Criar a **Task Definition** no Amazon ECS
+* Provisionar os containers da aplicação
+* Executar o serviço em ambiente cloud de forma escalável
+
+---
+
 ## 🚀 Deploy
 
 O deploy é realizado via **Docker**, garantindo:
@@ -249,10 +281,12 @@ A aplicação é monitorada por meio de:
 
 * Logs estruturados do Quarkus
 * Console administrativo do RabbitMQ
-* Monitoramento de filas, exchanges e mensagens processadas
+* Monitoramento de filas, exchanges e mensagens
 
 ---
 
 ## ✅ Conclusão
 
-O projeto atende **integralmente aos requisitos do Tech Challenge – Fase 4**, incorporando **Cloud Computing**, **Serverless**, **Mensageria**, **Segurança JWT**, **Monitoramento** e **Boas Práticas de Arquitetura**, entregando uma solução **robusta**, **segura**, **escalável** e **preparada para ambiente de produção**.
+O projeto atende **integralmente aos requisitos do Tech Challenge – Fase 4**, incorporando **Cloud Computing**, **Serverless**, **Mensageria**, **Segurança JWT**, **Monitoramento** e **Boas Práticas de Arquitetura**, entregando uma solução **robusta**, **segura**, **escalável** e **pronta para produção**.
+
+---

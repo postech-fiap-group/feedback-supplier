@@ -1,9 +1,3 @@
-Perfeito — eu vou **corrigir apenas o FORMATO**, mantendo **100% do conteúdo**, para ficar **igual ao padrão do restante do README** (títulos `##`, separadores `---`, listas e blocos de código).
-
-👉 Você pode **copiar e colar este README inteiro** que ele já está padronizado.
-
----
-
 # 📘 Plataforma de Feedback Acadêmico
 
 **Tech Challenge – Fase 4**
